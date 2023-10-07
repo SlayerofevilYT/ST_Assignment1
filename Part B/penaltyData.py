@@ -33,7 +33,7 @@ dates_column_name = 'OFFENCE_MONTH'
 penalty_value_column_name = 'FACE_VALUE'
 
 
-class CalcFrame(MyFrame1):
+class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -111,5 +111,5 @@ class CalcFrame(MyFrame1):
 
 if __name__ == "__main__":
     app = wx.App(False)
-    frame = CalcFrame()
+    frame = MyFrame()
     app.MainLoop()
