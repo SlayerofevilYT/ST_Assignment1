@@ -16,7 +16,7 @@ from matplotlib.figure import Figure
 from main import Frame1 as Frame1
 
 # Load the CSV file into a pandas DataFrame
-df = pd.read_csv('penalty_data_set_2.csv')
+df = pd.read_csv('penalty_data_set_2.csv', index_col=0)
 
 print("All searches are able to be left blank. Press enter if you do not want use the search parameters.")
 

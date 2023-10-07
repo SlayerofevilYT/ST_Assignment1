@@ -118,12 +118,8 @@ class Frame1(wx.Frame):
         # Connect Events
         self.m_togglereset.Bind(wx.EVT_TOGGLEBUTTON, self.ToggleReset)
         self.m_button8.Bind(wx.EVT_BUTTON, self.VideoData)
-        self.m_text_search.Bind(wx.EVT_TEXT, self.KeywordUpdate)
-        self.m_text_search.Bind(wx.EVT_TEXT_ENTER, self.KeywordUpdate)
         self.m_button_search_submit.Bind(wx.EVT_BUTTON, self.KeywordSearch)
         self.m_toggleBtn2.Bind(wx.EVT_TOGGLEBUTTON, self.GraphUpdate)
-        self.m_datePicker_start.Bind(wx.adv.EVT_DATE_CHANGED, self.StartDateUpdate)
-        self.m_datePicker_end.Bind(wx.adv.EVT_DATE_CHANGED, self.EndDateUpdate)
         self.m_button_date_submit.Bind(wx.EVT_BUTTON, self.DateSearch)
 
     def __del__(self):
@@ -136,19 +132,10 @@ class Frame1(wx.Frame):
     def VideoData(self, event):
         event.Skip()
 
-    def KeywordUpdate(self, event):
-        event.Skip()
-
     def KeywordSearch(self, event):
         event.Skip()
 
     def GraphUpdate(self, event):
-        event.Skip()
-
-    def StartDateUpdate(self, event):
-        event.Skip()
-
-    def EndDateUpdate(self, event):
         event.Skip()
 
     def DateSearch(self, event):
