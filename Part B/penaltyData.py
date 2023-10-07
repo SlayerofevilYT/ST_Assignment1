@@ -1,5 +1,7 @@
 import wx
 import wx.grid
+import wx.xrc
+import wx.adv
 import pandas as pd
 import numpy as np
 from datetime import datetime
