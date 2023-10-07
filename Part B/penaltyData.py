@@ -14,10 +14,12 @@ end_date_input = input("Enter an end date (dd/mm/yyyy): ")
 keyword = input("Enter a keyword to search for or leave it blank: ")
 
 if keyword: # WILL NEED TO CHANGE FOR UI, Right now it just asks for the specific name of the column you want to search in
-    keywordSearchColumn = input("Enter the column you would like to search for a keyword in: ")
+    keyword_search_column = input("Enter the column you would like to search for a keyword in: ")
 
-# Specify the name of the column to search for dates
+# Specify column names
 dates_column_name = 'OFFENCE_MONTH'
+penalty_value_column_name = 'FACE_VALUE'
+
 
 
 
@@ -48,12 +50,12 @@ def DateSearch():
         return result
 
 def KeywordSearch(result):
-    if result:
+    if result.isna:
         if keyword:
-            result = result[result[keywordSearchColumn].str.contains(keyword, case=False)] # If result and keyword are not null, search through result[]
-    elif result is None:
+            result = result[result[keyword_search_column].str.contains(keyword, case=False)] # If result and keyword are not null, search through result[]
+    elif result:
         if keyword:
-            result = df[(df[keywordSearchColumn].str.contains(keyword, case=False))] # If result is null but keyword is not, search through df[]
+            result = df[(df[keyword_search_column].str.contains(keyword, case=False))] # If result is null but keyword is not, search through df[]
 
 
     return result
@@ -73,10 +75,18 @@ def DisplayResults(result):
     else:
         print("No matching records found.")
 
+def AverageCost(result):
+    average_cost = result[penalty_value_column_name].mean()
+
+    return average_cost
+
 def StartSearch():
     dateResult = DateSearch()
     keywordResult = KeywordSearch(dateResult)
+    average_cost = AverageCost(keywordResult)
     DisplayResults(keywordResult)
+
+    # print("The average cost for these penalties are: " + average_cost)
 
 
 StartSearch()
