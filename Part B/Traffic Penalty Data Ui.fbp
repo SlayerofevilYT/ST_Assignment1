@@ -141,6 +141,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnToggleButton">ToggleReset</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -214,6 +215,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnButtonClick">VideoData</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -278,6 +280,8 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnText">KeywordUpdate</event>
+                                <event name="OnTextEnter">KeywordUpdate</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -351,6 +355,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnButtonClick">KeywordSearch</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -422,6 +427,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnToggleButton">GraphUpdate</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -545,6 +551,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnDateChanged">StartDateUpdate</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -668,6 +675,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnDateChanged">EndDateUpdate</event>
                             </object>
                         </object>
                         <object class="sizeritem" expanded="1">
@@ -741,6 +749,7 @@
                                 <property name="window_extra_style"></property>
                                 <property name="window_name"></property>
                                 <property name="window_style"></property>
+                                <event name="OnButtonClick">DateSearch</event>
                             </object>
                         </object>
                     </object>
@@ -893,7 +902,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_panel4</property>
+                                <property name="name">m_panel1</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -950,7 +959,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_panel5</property>
+                                <property name="name">m_panel2</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -1007,7 +1016,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_panel6</property>
+                                <property name="name">m_panel3</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
