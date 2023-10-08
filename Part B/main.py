@@ -101,18 +101,12 @@ class Frame1(wx.Frame):
 
         bSizer5.Add(bSizer7, 1, wx.EXPAND, 5)
 
-        wSizer2 = wx.WrapSizer(wx.HORIZONTAL, wx.WRAPSIZER_DEFAULT_FLAGS)
+        bSizer4 = wx.BoxSizer(wx.VERTICAL)
 
         self.m_panel1 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        wSizer2.Add(self.m_panel1, 1, wx.EXPAND | wx.ALL, 5)
+        bSizer4.Add(self.m_panel1, 1, wx.ALL | wx.EXPAND, 5)
 
-        self.m_panel2 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        wSizer2.Add(self.m_panel2, 1, wx.EXPAND | wx.ALL, 5)
-
-        self.m_panel3 = wx.Panel(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL)
-        wSizer2.Add(self.m_panel3, 1, wx.EXPAND | wx.ALL, 5)
-
-        bSizer5.Add(wSizer2, 1, wx.EXPAND, 5)
+        bSizer5.Add(bSizer4, 1, wx.EXPAND, 5)
 
         self.SetSizer(bSizer5)
         self.Layout()

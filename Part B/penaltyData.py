@@ -11,7 +11,7 @@ from main import Frame1 as Frame1
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg
 from matplotlib.figure import Figure
 
-df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
+df = pd.read_csv('penalty_data_set_2.csv', low_memory=False)
 editedDF = df
 
 matplotlib.use('WXAgg')
@@ -141,7 +141,6 @@ class MyFrame(Frame1):
 
         self.UpdateGrid(search_result)
 
-
     def ToggleReset(self, events):
         if self.resetBool is True:
             self.resetBool == False
@@ -156,74 +155,151 @@ class MyFrame(Frame1):
         self.m_grid_data.SetTable(temptable, True)
         self.Layout()
 
+    def GraphUpdate(self, event):
+        figure_score = self.plot_data(df)
+        h, w = self.m_panel1.GetSize()
+        figure_score.set_size_inches(h / figure_score.get_dpi(), w / figure_score.get_dpi())
 
-'''
-    def DateSearch():
-        if start_date_input:
+        canvas = FigureCanvasWxAgg(self.m_panel1, -1, figure_score)
+        canvas.SetSize(self.m_panel1.GetSize())
+
+        self.Layout()
+
+    def plot_data(self, df):
+        if 'OFFENCE_MONTH' in df.keys() and 'MOBILE_PHONE_IND' in df.keys():
+            # create dataframe using only relevant data
+            dfMbPh = pd.DataFrame(df, columns=['OFFENCE_MONTH', 'MOBILE_PHONE_IND'])
+
+            # convert the OFFENCE_MONTH to datetime
+            dfMbPh['OFFENCE_MONTH'] = pd.to_datetime(dfMbPh['OFFENCE_MONTH'], dayfirst=True)
+
+            # calling selected dates and converted to correct format
+            wx_min_date = self.m_datePicker_start.GetValue()
+            wx_max_date = self.m_datePicker_end.GetValue()
+            min_date = self.wxdate2pydate(wx_min_date)
+            max_date = self.wxdate2pydate(wx_max_date)
+
+            # removing data outside of selected timeframe
+            if min_date <= max_date:
+                dfMbPh = dfMbPh[(dfMbPh['OFFENCE_MONTH'] >= min_date) & (dfMbPh['OFFENCE_MONTH'] <= max_date)]
+
+            # add a column for YEAR of accident and MONTH of accident
             try:
-                start_date = datetime.strptime(start_date_input, "%d/%m/%Y")
-            except ValueError:
-                print("Invalid start date format. Please use the format dd/mm/yyyy.")
-                exit()
-            else:
-                start_date = datetime.min  # Set to the minimum possible datetime if there was no date provided
+                dfMbPh['YEAR'] = dfMbPh['OFFENCE_MONTH'].dt.year
+                dfMbPh['MONTH'] = dfMbPh['OFFENCE_MONTH'].dt.month
+            except:
+                print("Dates Dont Exist")
+                return
+            # drop unnecessary date column
+            dfMbPh.drop(columns=['OFFENCE_MONTH'], inplace=True)
 
-            if end_date_input:
-                try:
-                    end_date = datetime.strptime(end_date_input, "%d/%m/%Y")
-                except ValueError:
-                    print("Invalid end date format. Please use the format dd/mm/yyyy.")
-                    exit()
-            else:
-                end_date = datetime.max  # Set to the maximum possible datetime if there was no date provided
+            # dataframe w/ only mobile phone related incidents
+            dfMbPhCountTemp = dfMbPh[dfMbPh['MOBILE_PHONE_IND'] == 'Y']
 
-            if start_date <= end_date:
-                result = df[(df[dates_column_name].apply(
-                    lambda date_str: start_date <= datetime.strptime(date_str, "%d/%m/%Y") <= end_date))]
-            else:
-                result = df  # If start date is greater than end date, select all rows
+            # dataframe w/ count of incidents per month per year
+            dfMbPhCount = dfMbPhCountTemp.groupby(['YEAR', 'MONTH'])['MOBILE_PHONE_IND'].count().reset_index(
+                name='COUNT')
 
-            return result
-
-    def KeywordSearch(result):
-        if result.isna:
-            if keyword:
-                result = result[result[keyword_search_column].str.contains(keyword,
-                                                                           case=False)]  # If result and keyword are not null, search through result[]
-        elif result:
-            if keyword:
-                result = df[(df[keyword_search_column].str.contains(keyword,
-                                                                    case=False))]  # If result is null but keyword is not, search through df[]
-
-        return result
-
-    def DisplayResults(result):
-        # Display the search results
-        if not result.empty:
-            print("Search results:")
-            print(result)
-
-            dates = pd.to_datetime(result[dates_column_name], format="%d/%m/%Y")
-            values = result[dates_column_name].to_numpy()
-
-            # Continue with matplotlib graphs
-
+            # concat MONTH and YEAR and convert to datetime
+            dfMbPhCount['DATE'] = dfMbPhCount['MONTH'].map(str) + '-' + dfMbPhCount['YEAR'].map(str)
+            dfMbPhCount['DATE'] = pd.to_datetime(dfMbPhCount['DATE'], format='%m-%Y')
+            # plot as line
+            figure_score = Figure()
+            ax = figure_score.add_subplot(3, 1, 1)
+            ax.plot(dfMbPhCount['DATE'], dfMbPhCount['COUNT'])
+            ax.set_xlabel("Year")
+            ax.set_ylabel("Mobile Phone Penalties")
+            ax.grid(linestyle='--')
         else:
-            print("No matching records found.")
+            return
 
-    def AverageCost(result):
-        average_cost = result[penalty_value_column_name].mean()
+        if 'OFFENCE_MONTH' in df.keys() and 'FACE_VALUE' in df.keys() and 'TOTAL_NUMBER' in df.keys():
+            # create dataframe using only relevant data
+            dfAvFi = pd.DataFrame(df, columns=['OFFENCE_MONTH', 'FACE_VALUE', 'TOTAL_NUMBER'])
+            # convert the OFFENCE_MONTH to datetime
+            dfAvFi['OFFENCE_MONTH'] = pd.to_datetime(dfAvFi['OFFENCE_MONTH'], dayfirst=True)
 
-        return average_cost
+            # calling selected dates and converted to correct format
+            wx_min_date = self.m_datePicker_start.GetValue()
+            wx_max_date = self.m_datePicker_end.GetValue()
+            min_date = self.wxdate2pydate(wx_min_date)
+            max_date = self.wxdate2pydate(wx_max_date)
 
-    def StartSearch():
-        dateResult = DateSearch()
-        keywordResult = KeywordSearch(dateResult)
-        average_cost = AverageCost(keywordResult)
-        DisplayResults(keywordResult)
+            # removing data outside of selected timeframe
+            if min_date <= max_date:
+                dfAvFi = dfAvFi[(dfAvFi['OFFENCE_MONTH'] >= min_date) & (dfAvFi['OFFENCE_MONTH'] <= max_date)]
 
-        # print("The average cost for these penalties are: " + average_cost)
-'''
+            # add a column for YEAR of accident and MONTH of accident
+            try:
+                dfAvFi['YEAR'] = dfAvFi['OFFENCE_MONTH'].dt.year
+                dfAvFi['MONTH'] = dfAvFi['OFFENCE_MONTH'].dt.month
+            except:
+                print("Dates Dont Exist")
+                return
+            # dataframe w/ average fine price of every column
+            dfAvFi['AVG'] = dfAvFi["FACE_VALUE"].multiply(df["TOTAL_NUMBER"], axis="index")
+
+            # merging Month and Year into Date
+            dfAvFi['DATE'] = dfAvFi['MONTH'].map(str) + '-' + dfAvFi['YEAR'].map(str)
+
+            # drop unnecessary date column
+            dfAvFi.drop(columns=['OFFENCE_MONTH'], inplace=True)
+            dfAvFi.drop(columns=['FACE_VALUE'], inplace=True)
+            dfAvFi.drop(columns=['MONTH'], inplace=True)
+            dfAvFi.drop(columns=['YEAR'], inplace=True)
+
+            # merging columns based on the same date
+            aggregation_functions = {'TOTAL_NUMBER': 'sum', 'DATE': 'first', 'AVG': 'sum'}
+            dfAvFi = dfAvFi.groupby('DATE', as_index=False).aggregate(aggregation_functions)
+            dfAvFi['AVG'] = dfAvFi['AVG'].div(dfAvFi['TOTAL_NUMBER'])
+
+            # convert the Date to datetime
+            dfAvFi['DATE'] = pd.to_datetime(dfAvFi['DATE'], format='%m-%Y')
+
+            # sorting the values by date
+            dfAvFi.sort_values(by=['DATE'], inplace=True)
+
+            # plot as line
+            ax = figure_score.add_subplot(3, 1, 2)
+            ax.plot(dfAvFi['DATE'], dfAvFi['AVG'])
+            ax.set_xlabel("Year")
+            ax.set_ylabel("Average Fine Amount")
+            ax.grid(linestyle='--')
+        else:
+            return
+
+        if 'OFFENCE_MONTH' in df.keys() and 'MOBILE_PHONE_IND' in df.keys():
+            # create dataframe using only relevant data
+            dfOffCD = pd.DataFrame(df, columns=['OFFENCE_CODE', 'OFFENCE_MONTH'])
+
+            # convert the OFFENCE_MONTH to datetime
+            dfOffCD['OFFENCE_MONTH'] = pd.to_datetime(dfOffCD['OFFENCE_MONTH'], dayfirst=True)
+
+            # calling selected dates and converted to correct format
+            wx_min_date = self.m_datePicker_start.GetValue()
+            wx_max_date = self.m_datePicker_end.GetValue()
+            min_date = self.wxdate2pydate(wx_min_date)
+            max_date = self.wxdate2pydate(wx_max_date)
+
+            # removing data outside of selected timeframe
+            if min_date <= max_date:
+                dfOffCD = dfOffCD[(dfOffCD['OFFENCE_MONTH'] >= min_date) & (dfOffCD['OFFENCE_MONTH'] <= max_date)]
+
+            # adding a count and removing duplicate offence codes
+            dfOffCD = dfOffCD.assign(COUNT=dfOffCD['OFFENCE_CODE'].map(dfOffCD['OFFENCE_CODE'].value_counts()))
+            dfOffCD = dfOffCD.drop_duplicates(subset='OFFENCE_CODE', keep="first")
+            # setting the count to 75 if the count is larger than 50
+            dfOffCD['COUNT'].where(dfOffCD['COUNT'] <= 50, 75, inplace=True)
+            # plot as line
+            ax = figure_score.add_subplot(3, 1, 3)
+            ax.bar(dfOffCD['OFFENCE_CODE'], dfOffCD['COUNT'])
+            ax.set_xlabel("OFFENCE_CODE")
+            ax.set_ylabel("Cases per offense code")
+            ax.grid(linestyle='--')
+        else:
+            return
+        return figure_score
+
 
 if __name__ == "__main__":
     app = wx.App()
