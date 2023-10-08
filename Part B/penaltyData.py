@@ -19,17 +19,6 @@ matplotlib.use('WXAgg')
 EVEN_ROW_COLOUR = '#CCE6FF'
 GRID_LINE_COLOUR = '#ccc'
 
-
-# print("All searches are able to beleft blank. Press enter if you do not want use the search parameters.")
-
-# Prompt the user for a search date
-# start_date_input = input("Enter a start date (dd/mm/yyyy): ")
-# end_date_input = input("Enter an end date (dd/mm/yyyy): ")
-# keyword = input("Enter a keyword to search for or leave it blank: ")
-
-# if keyword:  # WILL NEED TO CHANGE FOR UI, Right now it just asks for the specific name of the column you want to search in
-#    keyword_search_column = input("Enter the column you would like to search for a keyword in: ")
-
 class LoadData(wx.grid.GridTableBase):
     def __init__(self, data=None):
         wx.grid.GridTableBase.__init__(self)
@@ -93,7 +82,7 @@ class MyFrame(Frame1):
             return None
 
     def DateSearch(self, event):
-        if self.resetBool:
+        if self.resetBool is True: # Checking what data is being used. Whether if it will be continuing from previous search or not
             temp_df = editedDF
         else:
             temp_df = self.filteredDF
@@ -107,46 +96,53 @@ class MyFrame(Frame1):
         max_date = self.wxdate2pydate(wx_max_date)
 
         if min_date <= max_date:
-            search_result = temp_df[(temp_df['OFFENCE_MONTH'] >= min_date) & (temp_df['OFFENCE_MONTH'] <= max_date)]
+            search_result = temp_df[(temp_df['OFFENCE_MONTH'] >= min_date) & (temp_df['OFFENCE_MONTH'] <= max_date)] # Searching through the column 'OFFENCE_MONTH' for any data within the specified start and end date.
 
-        if self.resetBool == False:
+        if self.resetBool is True:
             self.filteredDF = editedDF
+        else:
+            self.filteredDF = search_result
 
-        self.UpdateGrid(search_result)
+        self.UpdateGrid(search_result) # Updates grid with 'search_result'
 
     def KeywordSearch(self, event):
-        if self.resetBool:
+        if self.resetBool is True: # Checking what data is being used. Whether if it will be continuing from previous search or not
             temp_df = editedDF
         else:
             temp_df = self.filteredDF
 
         keyword = self.m_text_search.GetValue()
-        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains(keyword, case=False)]
+        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains(keyword, case=False)] # Searching through the column 'OFFENCE_DESC' for any description that contains the keyword.
 
-        if self.resetBool == False:
+        if self.resetBool is True:
             self.filteredDF = editedDF
+        else:
+            self.filteredDF = search_result
 
-        self.UpdateGrid(search_result)
+
+        self.UpdateGrid(search_result) # Updates grid with 'search_result'
 
     def VideoData(self, events):
-        if self.resetBool:
+        if self.resetBool is True: # Checking what data is being used. Whether if it will be continuing from previous search or not
             temp_df = editedDF
         else:
             temp_df = self.filteredDF
 
-        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains('Camera', case=False)]
+        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)] # Searching through the column 'OFFENCE_DESC' for any description that contains Camera Detected.
 
-        if self.resetBool == False:
-            self.filteredDF = editedDF
-
-        self.UpdateGrid(search_result)
-
-    def ToggleReset(self, events):
         if self.resetBool is True:
-            self.resetBool == False
-        elif self.resetBool is False:
-            self.resetBool == True
             self.filteredDF = editedDF
+        else:
+            self.filteredDF = search_result
+        
+
+        self.UpdateGrid(search_result) # Updates grid with 'search_result'
+
+    def ToggleReset(self, events): # This function switches a bool on clicked. This is the function that decides whether the user will search through previous searched data or the all the data
+        if self.resetBool is True:
+            self.resetBool = False
+        elif self.resetBool is False:
+            self.resetBool = True
 
     def UpdateGrid(self, data):
         # Helper method to update the grid with search results
