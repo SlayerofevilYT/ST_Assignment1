@@ -11,10 +11,11 @@ from main import Frame1 as Frame1
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg
 from matplotlib.figure import Figure
 
+df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
+editedDF = df
+
 matplotlib.use('WXAgg')
 
-# Load the CSV file into a pandas DataFrame
-resetBool = False
 EVEN_ROW_COLOUR = '#CCE6FF'
 GRID_LINE_COLOUR = '#ccc'
 
@@ -62,10 +63,11 @@ class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
-        self.editedDF = self.df
-        self.table = LoadData(self.df)
+        self.table = LoadData(editedDF)
         self.m_grid_data.SetTable(self.table, takeOwnership=True)
+
+        self.filteredDF = editedDF
+        self.resetBool = False
 
         self.Show(True)
         self.Layout()
@@ -91,12 +93,12 @@ class MyFrame(Frame1):
             return None
 
     def DateSearch(self, event):
-        if resetBool == True:
-            temp_df1 = self.df
-        elif resetBool == False:
-            temp_df1 = self.editedDF
+        if self.resetBool:
+            temp_df = editedDF
+        else:
+            temp_df = self.filteredDF
 
-        temp_df1['OFFENCE_MONTH'] = pd.to_datetime(temp_df1['OFFENCE_MONTH'], format='%d/%m/%Y')
+        temp_df['OFFENCE_MONTH'] = pd.to_datetime(temp_df['OFFENCE_MONTH'], format='%d/%m/%Y')
 
         wx_min_date = self.m_datePicker_start.GetValue()
         wx_max_date = self.m_datePicker_end.GetValue()
@@ -105,54 +107,54 @@ class MyFrame(Frame1):
         max_date = self.wxdate2pydate(wx_max_date)
 
         if min_date <= max_date:
-            temp_df = temp_df1[(temp_df1['OFFENCE_MONTH'] >= min_date) & (temp_df1['OFFENCE_MONTH'] <= max_date)]
-            temptable = LoadData(temp_df)
+            search_result = temp_df[(temp_df['OFFENCE_MONTH'] >= min_date) & (temp_df['OFFENCE_MONTH'] <= max_date)]
+
+        if self.resetBool == False:
+            self.filteredDF = search_result
+
+        self.UpdateGrid(search_result)
+
+    def KeywordSearch(self, event):
+        if self.resetBool:
+            temp_df = editedDF
         else:
-            #print("Invalid date")
-            temptable = LoadData(self.df)
+            temp_df = self.filteredDF
 
-        self.m_grid_data.ClearGrid()
-        self.m_grid_data.SetTable(temptable,True)
-        self.Layout()
+        keyword = self.m_text_search.GetValue()
+        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains(keyword, case=False)]
 
-        self.editedDF = temp_df
+        if self.resetBool == False:
+            self.filteredDF = search_result
 
-    def KeywordSearch(self):
-        if resetBool == True:
-            if keyword:
-                search_result = df[df.str.contains(keyword, case=False)]
-                temptable = LoadData(search_result)
-        elif resetBool == False:
-            if keyword:
-                editedDF = editedDF[(editedDF.str.contains(keyword, case=False))]
-                temptable = LoadData(editedDF)
-        else:
-            search_result = df
-            temptable = LoadData(search_result)
-
-        self.m_grid_data.ClearGrid()
-        self.m_grid_data.SetTable(temptable, True)
-        self.Layout()
-
+        self.UpdateGrid(search_result)
 
     def CameraDetected(self):
-        if resetBool == True:
-            if keyword:
-                df = df[df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
-        elif resetBool == False:
-            if keyword:
-                editedDF = editedDF[editedDF['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+        if self.resetBool:
+            temp_df = editedDF
+        else:
+            temp_df = self.filteredDF
 
+        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+
+        if self.resetBool == False:
+            self.filteredDF = search_result
+
+        self.UpdateGrid(search_result)
+
+
+    def ToggleReset(self, events):
+        if self.resetBool is True:
+            self.resetBool == False
+        elif self.resetBool is False:
+            self.resetBool == True
+            self.filteredDF = editedDF
+
+    def UpdateGrid(self, data):
+        # Helper method to update the grid with search results
+        temptable = LoadData(data)
         self.m_grid_data.ClearGrid()
         self.m_grid_data.SetTable(temptable, True)
         self.Layout()
-
-
-    def ToggleReset(self):
-        if resetBool is True:
-            resetBool == False
-        elif resetBool is False:
-            resetBool == True
 
 
 '''
@@ -221,8 +223,6 @@ class MyFrame(Frame1):
         DisplayResults(keywordResult)
 
         # print("The average cost for these penalties are: " + average_cost)
-
-    StartSearch()
 '''
 
 if __name__ == "__main__":
