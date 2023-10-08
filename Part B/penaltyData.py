@@ -31,11 +31,6 @@ GRID_LINE_COLOUR = '#ccc'
 # if keyword:  # WILL NEED TO CHANGE FOR UI, Right now it just asks for the specific name of the column you want to search in
 #    keyword_search_column = input("Enter the column you would like to search for a keyword in: ")
 
-# Specify column names
-# dates_column_name = 'OFFENCE_MONTH'
-# penalty_value_column_name = 'FACE_VALUE'
-
-
 class LoadData(wx.grid.GridTableBase):
     def __init__(self, data=None):
         wx.grid.GridTableBase.__init__(self)
@@ -69,17 +64,77 @@ class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.table = LoadData(editedDF)
+        self.table = LoadData()
         self.m_grid_data.SetTable(self.table, takeOwnership=True)
 
         self.Show(True)
         self.Layout()
 
-    def DateSearch(self, event):
-        temptable = LoadData(editedDF)
+    def DateSearch(self, start_date_input, end_date_input, event):
+        if start_date_input:
+            try:
+                start_date = datetime.strptime(start_date_input, "%d/%m/%Y")
+            except ValueError:
+                print("Invalid start date format. Please use the format dd/mm/yyyy.")
+                exit()
+            else:
+                start_date = datetime.min  # Set to the minimum possible datetime if there was no date provided
+
+            if end_date_input:
+                try:
+                    end_date = datetime.strptime(end_date_input, "%d/%m/%Y")
+                except ValueError:
+                    print("Invalid end date format. Please use the format dd/mm/yyyy.")
+                    exit()
+            else:
+                end_date = datetime.max  # Set to the maximum possible datetime if there was no date provided
+
+            if start_date <= end_date:
+                search_result = editedDF[(editedDF['OFFENCE_MONTH'].apply(
+                    lambda date_str: start_date <= datetime.strptime(date_str, "%d/%m/%Y") <= end_date))]
+            else:
+                search_result = df  # If start date is greater than end date, select all rows
+
+
+        if resetBool == True:
+            temptable = LoadData(df)
+        elif resetBool == False:
+            temptable = LoadData(editedDF)
+
         self.m_grid_data.ClearGrid()
         self.m_grid_data.SetTable(temptable, True)
         self.Layout()
+
+        return editedDF
+
+    def KeywordSearch(self):
+        if resetBool == True:
+            if keyword:
+                search_result = df[df.str.contains(keyword, case=False)]  # If result and keyword are not null, search through result[]
+        elif resetBool == False:
+            if keyword:
+                search_result = editedDF[(editedDF.str.contains(keyword, case=False))]  # If result is null but keyword is not, search through df[]
+
+        return search_result
+
+    def CameraDetected(self):
+        if resetBool == True:
+            if keyword:
+                search_result = df[df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+        elif resetBool == False:
+            if keyword:
+                search_result = editedDF[editedDF['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+
+        return search_result
+
+
+    def ToggleReset(self):
+        if resetBool is True:
+            resetBool == False
+        elif resetBool is False:
+            resetBool == True
+
+
 '''
     def DateSearch():
         if start_date_input:
