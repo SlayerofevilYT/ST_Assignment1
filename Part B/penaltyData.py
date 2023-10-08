@@ -14,8 +14,6 @@ from matplotlib.figure import Figure
 matplotlib.use('WXAgg')
 
 # Load the CSV file into a pandas DataFrame
-df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
-editedDF = df
 resetBool = False
 EVEN_ROW_COLOUR = '#CCE6FF'
 GRID_LINE_COLOUR = '#ccc'
@@ -64,7 +62,9 @@ class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.table = LoadData(editedDF)
+        self.df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
+        self.editedDF = self.df
+        self.table = LoadData(self.df)
         self.m_grid_data.SetTable(self.table, takeOwnership=True)
 
         self.Show(True)
@@ -72,24 +72,50 @@ class MyFrame(Frame1):
 
         self.search_filters = []
 
-    def OnDateSearch(self, event):
-        min_date = float(self.m_datePicker_start.GetValue())
-        editedDF = df[df['OFFENCE_MONTH'] > min_date]
+    def wxdate2pydate(self, date):
+        assert isinstance(date, wx.DateTime)
+        if date.IsValid():
+            year = date.GetYear()
+            month = date.GetMonth() + 1
+            day = date.GetDay()
 
-        max_date = float(self.m_datePicker_end.GetValue())
-        editedDF = editedDF[editedDF['OFFENCE_MONTH'] < max_date]
+            # Format day, month, and year as strings
+            formatted_day = "{:02d}".format(day)  # Format day with leading zeros
+            formatted_month = "{:02d}".format(month)  # Format month with leading zeros
+            formatted_year = "{:04d}".format(year)  # Format year with four digits
+
+            # Create a Python datetime.datetime object with the formatted date components
+            formatted_date = datetime(int(formatted_year), int(formatted_month), int(formatted_day))
+            return formatted_date
+        else:
+            return None
+
+    def DateSearch(self, event):
+        if resetBool == True:
+            temp_df1 = self.df
+        elif resetBool == False:
+            temp_df1 = self.editedDF
+
+        temp_df1['OFFENCE_MONTH'] = pd.to_datetime(temp_df1['OFFENCE_MONTH'], format='%d/%m/%Y')
+
+        wx_min_date = self.m_datePicker_start.GetValue()
+        wx_max_date = self.m_datePicker_end.GetValue()
+
+        min_date = self.wxdate2pydate(wx_min_date)
+        max_date = self.wxdate2pydate(wx_max_date)
 
         if min_date <= max_date:
-            temp_df = editedDF[(editedDF['OFFENCE_MONTH'].apply(
-                    lambda date_str: min_date <= datetime.strptime(date_str, "%d/%m/%Y") <= max_date))]
+            temp_df = temp_df1[(temp_df1['OFFENCE_MONTH'] >= min_date) & (temp_df1['OFFENCE_MONTH'] <= max_date)]
             temptable = LoadData(temp_df)
         else:
             #print("Invalid date")
-            temptable = LoadData(df)
+            temptable = LoadData(self.df)
 
         self.m_grid_data.ClearGrid()
         self.m_grid_data.SetTable(temptable,True)
         self.Layout()
+
+        self.editedDF = temp_df
 
     def KeywordSearch(self):
         if resetBool == True:
