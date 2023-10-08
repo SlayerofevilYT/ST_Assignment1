@@ -7,39 +7,80 @@ import numpy as np
 from datetime import datetime
 import matplotlib.pyplot as plt
 import matplotlib
-
-matplotlib.use('WXAgg')
-
+from main import Frame1 as Frame1
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg
 from matplotlib.figure import Figure
 
-from main import Frame1 as Frame1
+matplotlib.use('WXAgg')
 
 # Load the CSV file into a pandas DataFrame
-df = pd.read_csv('penalty_data_set_2.csv', index_col=0)
+df = pd.read_csv('penalty_data_set_2.csv', index_col=0, low_memory=False)
+editedDF = df
+resetBool = False
+EVEN_ROW_COLOUR = '#CCE6FF'
+GRID_LINE_COLOUR = '#ccc'
 
-print("All searches are able to be left blank. Press enter if you do not want use the search parameters.")
+
+# print("All searches are able to be left blank. Press enter if you do not want use the search parameters.")
 
 # Prompt the user for a search date
-start_date_input = input("Enter a start date (dd/mm/yyyy): ")
-end_date_input = input("Enter an end date (dd/mm/yyyy): ")
-keyword = input("Enter a keyword to search for or leave it blank: ")
+# start_date_input = input("Enter a start date (dd/mm/yyyy): ")
+# end_date_input = input("Enter an end date (dd/mm/yyyy): ")
+# keyword = input("Enter a keyword to search for or leave it blank: ")
 
-if keyword:  # WILL NEED TO CHANGE FOR UI, Right now it just asks for the specific name of the column you want to search in
-    keyword_search_column = input("Enter the column you would like to search for a keyword in: ")
+# if keyword:  # WILL NEED TO CHANGE FOR UI, Right now it just asks for the specific name of the column you want to search in
+#    keyword_search_column = input("Enter the column you would like to search for a keyword in: ")
 
 # Specify column names
-dates_column_name = 'OFFENCE_MONTH'
-penalty_value_column_name = 'FACE_VALUE'
+# dates_column_name = 'OFFENCE_MONTH'
+# penalty_value_column_name = 'FACE_VALUE'
+
+
+class LoadData(wx.grid.GridTableBase):
+    def __init__(self, data=None):
+        wx.grid.GridTableBase.__init__(self)
+        self.headerRows = 1
+        self.data = data
+
+    def GetNumberRows(self):
+        return len(self.data.index)
+
+    def GetNumberCols(self):
+        return len(self.data.columns)
+
+    def GetValue(self, row, col):
+        return self.data.iloc[row, col]
+
+    def SetValue(self, row, col, value):
+        self.data.iloc[row, col] = value
+
+    # For better visualisation
+    def GetColLabelValue(self, col):
+        return self.data.columns[col]
+
+    def GetAttr(self, row, col, prop):
+        attr = wx.grid.GridCellAttr()
+        if row % 2 == 1:
+            attr.SetBackgroundColour(EVEN_ROW_COLOUR)
+        return attr
 
 
 class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.Layout()
-        self.Show(True)
+        self.table = LoadData(editedDF)
+        self.m_grid_data.SetTable(self.table, takeOwnership=True)
 
+        self.Show(True)
+        self.Layout()
+
+    def DateSearch(self, event):
+        temptable = LoadData(editedDF)
+        self.m_grid_data.ClearGrid()
+        self.m_grid_data.SetTable(temptable, True)
+        self.Layout()
+'''
     def DateSearch():
         if start_date_input:
             try:
@@ -107,9 +148,9 @@ class MyFrame(Frame1):
         # print("The average cost for these penalties are: " + average_cost)
 
     StartSearch()
-
+'''
 
 if __name__ == "__main__":
-    app = wx.App(False)
+    app = wx.App()
     frame = MyFrame()
     app.MainLoop()

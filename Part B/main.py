@@ -73,7 +73,7 @@ class Frame1(wx.Frame):
         self.m_grid_data = wx.grid.Grid(self, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, 0)
 
         # Grid
-        self.m_grid_data.CreateGrid(20, 25)
+        self.m_grid_data.CreateGrid(100, 100)
         self.m_grid_data.EnableEditing(False)
         self.m_grid_data.EnableGridLines(True)
         self.m_grid_data.EnableDragGridSize(False)
@@ -83,9 +83,11 @@ class Frame1(wx.Frame):
         self.m_grid_data.AutoSizeColumns()
         self.m_grid_data.EnableDragColMove(False)
         self.m_grid_data.EnableDragColSize(True)
+        self.m_grid_data.SetColLabelSize(wx.grid.GRID_AUTOSIZE)
         self.m_grid_data.SetColLabelAlignment(wx.ALIGN_CENTER, wx.ALIGN_CENTER)
 
         # Rows
+        self.m_grid_data.AutoSizeRows()
         self.m_grid_data.EnableDragRowSize(True)
         self.m_grid_data.SetRowLabelAlignment(wx.ALIGN_CENTER, wx.ALIGN_CENTER)
 
@@ -93,6 +95,8 @@ class Frame1(wx.Frame):
 
         # Cell Defaults
         self.m_grid_data.SetDefaultCellAlignment(wx.ALIGN_LEFT, wx.ALIGN_TOP)
+        self.m_grid_data.SetMaxSize(wx.Size(-1, 500))
+
         bSizer7.Add(self.m_grid_data, 0, wx.ALL, 5)
 
         bSizer5.Add(bSizer7, 1, wx.EXPAND, 5)
