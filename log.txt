@@ -1,0 +1,323 @@
+commit 1d3ac9f3e3a978c73d3088d02376f39f8376c823
+Merge: 66c88f0 225b84c
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 20:59:01 2023 +1000
+
+    Merge branch 'main' of https://github.com/SlayerofevilYT/ST_Assignment1
+
+commit 66c88f0cc24b84f8a02bd579131fd2ee52ae9b6a
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 20:58:52 2023 +1000
+
+    updated executive summary and functions
+
+commit 225b84cf3d26fa4b88e6131684d0aadfdb373c4a
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 20:50:59 2023 +1000
+
+    Partial implementation edit
+
+commit ed845f1f173dec384f979d01481222ab6479e32b
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 20:32:04 2023 +1000
+
+    document editing
+
+commit 3a01bb40e9abe0a88b9d3da6eb2a85e3aef7c5d3
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 19:58:48 2023 +1000
+
+    executive summary graph functions
+
+commit fd2adf7ab89ce6245622cfeb1489502970e2ea52
+Merge: 217b45f 0a3b987
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 19:44:31 2023 +1000
+
+    Merge branch 'main' of https://github.com/SlayerofevilYT/ST_Assignment1
+
+commit 217b45faeebb38a81b7870c1d2dac68462787891
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 19:44:29 2023 +1000
+
+    Graph functions, summary setup
+
+commit 3e4f2627c7d069f30a8732cfcd4da7c2c06cf10a
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 19:44:13 2023 +1000
+
+    Graph functions, summary setup
+
+commit 0a3b9878324d6bd982648f1c015c2a80c32df35c
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 19:38:45 2023 +1000
+
+    updated SDD
+
+commit aadabbd963521c21aaa4193b00e60ccca0fc5cce
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 16:58:02 2023 +1000
+
+    updated SDD, added title and names to others
+
+commit 71437df55e41f50b6cc7ab5a1e2ca7398d0915c0
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 16:31:55 2023 +1000
+
+    updated functions. Finished toggle
+
+commit 7960314b6c6d58f69ef90d1b3d0afa95f6e6bba6
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 16:06:24 2023 +1000
+
+    updated all functions
+
+commit 7a2e56edcb9b8008747e5b4782cfbc35cca7846c
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 15:24:47 2023 +1000
+
+    updated datetime
+
+commit deae3d9e25e15954c6579bbbbc602b48a0e21ff7
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 13:30:44 2023 +1000
+
+    Changed python versions, updated date search function
+
+commit a53075fef50d696f82e2b589f33044c4edf2a03a
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 11:37:55 2023 +1000
+
+    Extra couple updates to search functions
+
+commit 10d9998d6973fc218afed54df4ed1c40ef1f2fad
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 8 11:17:40 2023 +1000
+
+    Updated search functions
+
+commit 3e12bb56d754a3212d57cb6452ced66c650f9568
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 10:52:44 2023 +1000
+
+    Added Base loading data
+
+commit 6487d7bff28e26673a98979c8e0b773fbcc6cf69
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 09:08:00 2023 +1000
+
+    ui file update
+
+commit c2610cc425fb6a376b0a32da4a052e017e4bdeb6
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 08:43:51 2023 +1000
+
+    removed unused events from UI
+
+commit 70d3eaf70f7e1d7bd0d4e02350fd02b4826930f8
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 07:20:34 2023 +1000
+
+    myframe name edit
+
+commit 8f7347389322260b528a879235c3f7a4e2b8b3bc
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 07:19:13 2023 +1000
+
+    extra imports
+
+commit ef3f1b224858fc6a0699fac198a25ab5829649c5
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 07:13:54 2023 +1000
+
+    added ui to program
+
+commit 455e0990edebbc5dd7f133fdcaad168f9f87ad7d
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sun Oct 8 06:57:50 2023 +1000
+
+    Gantt Chart Update, User Manual, Ui Function Implementation
+
+commit e1b1622de962bd055952df9fad3520e3e0da42c2
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Sat Oct 7 17:44:42 2023 +1000
+
+    Ui Development
+
+commit f054160f33bbeaf38e370b8c2df148d345eb808f
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sat Oct 7 16:53:56 2023 +1000
+
+    updated
+
+commit cf3e96cb3debfce6e045690e59d01009d9405088
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sat Oct 7 14:40:03 2023 +1000
+
+    Updated code a little. Added functions
+    
+    Will need to properly adapt how the functions work and the order in which they will be called. For now, the date search function will always be called first.
+
+commit d96d75f1b295515e7628433a481bae2b4a085af4
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Tue Oct 3 00:16:15 2023 +1000
+
+    begun prototyping of start, end date and keyword searches
+
+commit 53d9dbc0b2716f2841db45faff4b8a008261e2da
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sun Oct 1 16:56:42 2023 +1000
+
+    Begun creating search functions
+
+commit 6c9523355b8a08cb887077a14abba4268d68f752
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Tue Sep 19 13:10:35 2023 +1000
+
+    Folder organization
+
+commit 9607dce914092e2cd80a9fc35f7db08b7ea9f1fa
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sat Sep 9 15:06:24 2023 +1000
+
+    added git commits
+
+commit 0ffb107a422a521b70fabcef7e8b636907490a2d
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sat Sep 9 15:03:08 2023 +1000
+
+    Updated 2.3 Use cases
+
+commit 845c4b015e043a1b7928c9d5286f252a7d77b79a
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Sat Sep 9 13:21:44 2023 +1000
+
+    Updated 3.2.2, 3.2.3
+
+commit ee8e8e977a9404f8d5edaa0c0d8f21451e9cbcbd
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Fri Sep 8 11:29:14 2023 +1000
+
+    Ui Layout edit
+
+commit aea082d3a803ab1cbe9b48b1499f1ed47ef93bc3
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Fri Sep 8 01:36:53 2023 +1000
+
+    Updated 3.1, 3.2.1, 3.2.2
+
+commit b985c5ba64ed7cef5f2ce73438807d7654df0ee2
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Wed Sep 6 23:44:51 2023 +1000
+
+    4.0 Visual design
+
+commit d393890b6b1cb0e1e0a059bb423811115c7f6db5
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Wed Sep 6 23:15:10 2023 +1000
+
+    UI Design Original
+
+commit 25bbbc929ca894bf600fdec3441d7e42bc5d084a
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Wed Sep 6 22:25:48 2023 +1000
+
+    Gantt Chart update & 1.0 System Vision
+
+commit 96cc037acd5ea41b646f3ba0e315c19acdbc37f0
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Wed Sep 6 22:14:37 2023 +1000
+
+    gantt chart update
+
+commit 0f4d193b4bb5741ba436d6ff662ed5d02034968b
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Wed Sep 6 22:09:57 2023 +1000
+
+    Updated 2.1 and 2.2
+
+commit 180f5a6d2346f4e7f9e7c086cef6696721d25310
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Wed Sep 6 13:20:24 2023 +1000
+
+    Updated 3.2.1
+
+commit 1078225aa21d6b8da54ca5e0208d315f05580f39
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Wed Sep 6 12:21:19 2023 +1000
+
+    Updated 1.1, 1.2, 2.3, 3.2.1
+
+commit aad76f80dd8041aff9c184b83a2ae63e6d567bcc
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Tue Sep 5 22:14:15 2023 +1000
+
+    gantt chart update
+
+commit a2d507f21474b5cb3dcfeef0a86189d0cea7e5dd
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Tue Sep 5 19:08:59 2023 +1000
+
+    SDD - System Vision and Requirements
+
+commit a39267e943b3a2c5762f9d56aa9018418a11cf40
+Author: SlayerofevilYT <realslayerofevil@gmail.com>
+Date:   Mon Sep 4 21:28:38 2023 +1000
+
+    Working on SDD
+
+commit beedbb14779936d34aa1364c94a5333c7f42e55e
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 31 18:53:00 2023 +1000
+
+    Project Plan Gantt Chart
+
+commit 0378943fe0d428bedd277636899f6ce59e0df273
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 31 18:04:19 2023 +1000
+
+    project plan Activity Definition and Estimation with WBS Edits
+
+commit a66cf162119826447de71b061210cf0a80526c5e
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 31 17:28:33 2023 +1000
+
+    Original Work Breakdown Structure
+
+commit f88de6b4a337361cf09e2d9ad791288680cf2183
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 31 17:27:43 2023 +1000
+
+    Project Plan Work Breakdown Structure
+
+commit 3738f43c083603db301f51dfb4b73c481db0775d
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 31 17:16:18 2023 +1000
+
+    Project Plan Intro
+
+commit d5c16303d0b45266c31efeee7ffe0d4736b13a60
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 10 10:34:02 2023 +1000
+
+    Added Marking Guide
+
+commit 3db93ad93a9231458c693ad896bcdbc5408b044f
+Author: RadioactiveW <82916350+RadioactiveW@users.noreply.github.com>
+Date:   Thu Aug 10 10:26:40 2023 +1000
+
+    Case Study
+
+commit d858f99668f68369646e8132860d3e3da3e440e8
+Author: SlayerofevilYT <131419177+SlayerofevilYT@users.noreply.github.com>
+Date:   Thu Aug 10 10:11:52 2023 +1000
+
+    Add files via upload
+    
+    Files from Part A
+
+commit 0a8a9139a38af9d4321817c3e88eb96efcc79818
+Author: SlayerofevilYT <131419177+SlayerofevilYT@users.noreply.github.com>
+Date:   Thu Aug 10 10:11:04 2023 +1000
+
+    Initial commit
