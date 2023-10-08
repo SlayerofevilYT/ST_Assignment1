@@ -64,64 +64,50 @@ class MyFrame(Frame1):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.table = LoadData()
+        self.table = LoadData(editedDF)
         self.m_grid_data.SetTable(self.table, takeOwnership=True)
 
         self.Show(True)
         self.Layout()
 
-    def DateSearch(self, start_date_input, end_date_input, event):
-        if start_date_input:
-            try:
-                start_date = datetime.strptime(start_date_input, "%d/%m/%Y")
-            except ValueError:
-                print("Invalid start date format. Please use the format dd/mm/yyyy.")
-                exit()
-            else:
-                start_date = datetime.min  # Set to the minimum possible datetime if there was no date provided
+        self.search_filters = []
 
-            if end_date_input:
-                try:
-                    end_date = datetime.strptime(end_date_input, "%d/%m/%Y")
-                except ValueError:
-                    print("Invalid end date format. Please use the format dd/mm/yyyy.")
-                    exit()
-            else:
-                end_date = datetime.max  # Set to the maximum possible datetime if there was no date provided
+    def OnDateSearch(self, event):
+        min_date = float(self.m_datePicker_start.GetValue())
+        editedDF = df[df['OFFENCE_MONTH'] > min_date]
 
-            if start_date <= end_date:
-                search_result = editedDF[(editedDF['OFFENCE_MONTH'].apply(
-                    lambda date_str: start_date <= datetime.strptime(date_str, "%d/%m/%Y") <= end_date))]
-            else:
-                search_result = df  # If start date is greater than end date, select all rows
+        max_date = float(self.m_datePicker_end.GetValue())
+        editedDF = editedDF[editedDF['OFFENCE_MONTH'] < max_date]
 
-
-        if resetBool == True:
+        if min_date <= max_date:
+            temp_df = editedDF[(editedDF['OFFENCE_MONTH'].apply(
+                    lambda date_str: min_date <= datetime.strptime(date_str, "%d/%m/%Y") <= max_date))]
+            temptable = LoadData(temp_df)
+        else:
+            #print("Invalid date")
             temptable = LoadData(df)
+
+        self.m_grid_data.ClearGrid()
+        self.m_grid_data.SetTable(temptable,True)
+        self.Layout()
+
+    def KeywordSearch(self):
+        if resetBool == True:
+            if keyword:
+                search_result = df[df.str.contains(keyword, case=False)]
+                temptable = LoadData(search_result)
         elif resetBool == False:
+            if keyword:
+                editedDF = editedDF[(editedDF.str.contains(keyword, case=False))]
+                temptable = LoadData(editedDF)
+        else:
+            search_result = df
             temptable = LoadData(search_result)
 
         self.m_grid_data.ClearGrid()
         self.m_grid_data.SetTable(temptable, True)
         self.Layout()
 
-        return editedDF
-
-    def KeywordSearch(self):
-        if resetBool == True:
-            if keyword:
-                search_result = df[df.str.contains(keyword, case=False)]  # If result and keyword are not null, search through result[]
-                temptable = LoadData(search_result)
-        elif resetBool == False:
-            if keyword:
-                editedDF = editedDF[(editedDF.str.contains(keyword, case=False))]  # If result is null but keyword is not, search through df[]
-                temptable = LoadData(editedDF)
-
-        self.m_grid_data.ClearGrid()
-        self.m_grid_data.SetTable(temptable, True)
-        self.Layout()
-
-        return editedDF
 
     def CameraDetected(self):
         if resetBool == True:
@@ -131,7 +117,9 @@ class MyFrame(Frame1):
             if keyword:
                 editedDF = editedDF[editedDF['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
 
-        return editedDF
+        self.m_grid_data.ClearGrid()
+        self.m_grid_data.SetTable(temptable, True)
+        self.Layout()
 
 
     def ToggleReset(self):
