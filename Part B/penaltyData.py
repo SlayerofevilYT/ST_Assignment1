@@ -21,7 +21,7 @@ EVEN_ROW_COLOUR = '#CCE6FF'
 GRID_LINE_COLOUR = '#ccc'
 
 
-# print("All searches are able to be left blank. Press enter if you do not want use the search parameters.")
+# print("All searches are able to beleft blank. Press enter if you do not want use the search parameters.")
 
 # Prompt the user for a search date
 # start_date_input = input("Enter a start date (dd/mm/yyyy): ")
@@ -99,7 +99,7 @@ class MyFrame(Frame1):
         if resetBool == True:
             temptable = LoadData(df)
         elif resetBool == False:
-            temptable = LoadData(editedDF)
+            temptable = LoadData(search_result)
 
         self.m_grid_data.ClearGrid()
         self.m_grid_data.SetTable(temptable, True)
@@ -111,21 +111,27 @@ class MyFrame(Frame1):
         if resetBool == True:
             if keyword:
                 search_result = df[df.str.contains(keyword, case=False)]  # If result and keyword are not null, search through result[]
+                temptable = LoadData(search_result)
         elif resetBool == False:
             if keyword:
-                search_result = editedDF[(editedDF.str.contains(keyword, case=False))]  # If result is null but keyword is not, search through df[]
+                editedDF = editedDF[(editedDF.str.contains(keyword, case=False))]  # If result is null but keyword is not, search through df[]
+                temptable = LoadData(editedDF)
 
-        return search_result
+        self.m_grid_data.ClearGrid()
+        self.m_grid_data.SetTable(temptable, True)
+        self.Layout()
+
+        return editedDF
 
     def CameraDetected(self):
         if resetBool == True:
             if keyword:
-                search_result = df[df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+                df = df[df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
         elif resetBool == False:
             if keyword:
-                search_result = editedDF[editedDF['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+                editedDF = editedDF[editedDF['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
 
-        return search_result
+        return editedDF
 
 
     def ToggleReset(self):
