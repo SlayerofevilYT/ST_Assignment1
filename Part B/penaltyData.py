@@ -110,7 +110,7 @@ class MyFrame(Frame1):
             search_result = temp_df[(temp_df['OFFENCE_MONTH'] >= min_date) & (temp_df['OFFENCE_MONTH'] <= max_date)]
 
         if self.resetBool == False:
-            self.filteredDF = search_result
+            self.filteredDF = editedDF
 
         self.UpdateGrid(search_result)
 
@@ -124,20 +124,20 @@ class MyFrame(Frame1):
         search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains(keyword, case=False)]
 
         if self.resetBool == False:
-            self.filteredDF = search_result
+            self.filteredDF = editedDF
 
         self.UpdateGrid(search_result)
 
-    def CameraDetected(self):
+    def VideoData(self, events):
         if self.resetBool:
             temp_df = editedDF
         else:
             temp_df = self.filteredDF
 
-        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains('Camera Detected', case=False)]
+        search_result = temp_df[temp_df['OFFENCE_DESC'].str.contains('Camera', case=False)]
 
         if self.resetBool == False:
-            self.filteredDF = search_result
+            self.filteredDF = editedDF
 
         self.UpdateGrid(search_result)
 
